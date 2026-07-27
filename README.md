@@ -70,12 +70,12 @@ El sistema también identifica preguntas fuera del ámbito del RETCC y evita env
 - [Prerrequisitos](#-prerrequisitos)
 - [Instalación](#-instalación)
 - [Configuración](#-configuración)
-- [Ejecución](#-ejecución)
+- [Ejecución](#ejecucion)
 - [Uso](#-uso)
 - [Pruebas recomendadas](#-pruebas-recomendadas)
 - [Contribución](#-contribución)
 - [Licencia](#-licencia)
-- [Autor](#-autor)
+- [Autor](#autor)
 
 ---
 
@@ -357,6 +357,7 @@ Estos archivos se utilizan para el avatar, el encabezado y el favicon de la apli
 
 ---
 
+<a id="ejecucion"></a>
 ## ▶️ Ejecución
 
 ### Google Colab
@@ -569,6 +570,7 @@ Este proyecto se distribuye bajo la licencia **MIT**.
 Consulta el archivo [`LICENSE`](LICENSE) para conocer los términos completos.
 
 
+<a id="autor"></a>
 ## 👨‍💻 Autor
 
 **Arturo Guerrero**
