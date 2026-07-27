@@ -580,7 +580,7 @@ Proyecto desarrollado como parte del desafío de creación de un agente de intel
 - GitHub: [arturexxx](https://github.com/arturexxx)
 - Repositorio: [Alura-AgenteIA-RAG-PDF](https://github.com/arturexxx/Alura-AgenteIA-RAG-PDF)
 - Email: agcguerrero@gmail.com
-
+- Phone: 991454023
 ---
 
 ## ⚠️ Aviso
