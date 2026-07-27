@@ -13,10 +13,37 @@
 
 **RetccBob** es un asistente virtual especializado en el Registro Nacional de Trabajadores de Construcción Civil (RETCC) del Perú. Utiliza RAG, memoria conversacional, extracción estructurada de tablas y un flujo de triaje con LangGraph para responder consultas basadas exclusivamente en los documentos oficiales cargados.
 
+## 🌐 Aplicación desplegada
+
+La aplicación se encuentra publicada en **Google Cloud Run** y puede probarse desde el siguiente enlace:
+
+### [Abrir RETCC.BOB en producción](https://retcc-bob-671777364299.southamerica-west1.run.app)
+
+```text
+https://retcc-bob-671777364299.southamerica-west1.run.app
+```
+
+Características del despliegue:
+
+- Servicio: `retcc-bob`
+- Plataforma: Google Cloud Run
+- Acceso: público
+- Escalamiento mínimo: `0` instancias
+- Escalamiento máximo: `1` instancia
+- Puerto del contenedor: `8080`
+- Memoria configurada: `4 GiB`
+- CPU: `1`
+- Despliegue continuo desde la rama `main`
+- Construcción de imagen mediante `Dockerfile`
+- Clave de Gemini administrada mediante la variable de entorno `GOOGLE_API_KEY`
+
+> El primer acceso puede demorar algunos segundos cuando Cloud Run inicia una nueva instancia.
+
+### Evidencia de funcionamiento en producción
+<img width="1430" height="852" alt="image" src="https://github.com/user-attachments/assets/92094b35-69cb-4c2b-9aa9-f482120abc6c" />
+
 ---
 
-## 📸 Demostración
-<img width="1440" height="739" alt="image" src="https://github.com/user-attachments/assets/e13a63d6-2c39-44f0-b039-0403d911a49f" />
 
 ### Ejemplos de consultas
 
@@ -33,6 +60,7 @@ El sistema también identifica preguntas fuera del ámbito del RETCC y evita env
 
 ## 📑 Tabla de contenidos
 
+- [Aplicación desplegada](#-aplicación-desplegada)
 - [Características](#-características)
 - [Arquitectura](#-arquitectura)
 - [Flujo de triaje](#-flujo-de-triaje)
@@ -112,6 +140,10 @@ Usuario: ¿Y cuánto cuesta en Lima?
 | Pydantic | Salida estructurada del triaje |
 | Gradio | Interfaz web |
 | HTML y CSS | Diseño personalizado |
+| Docker | Empaquetado de la aplicación |
+| Google Cloud Build | Construcción automática de la imagen |
+| Google Cloud Run | Publicación y ejecución en producción |
+| GitHub Developer Connect | Despliegue continuo desde el repositorio |
 
 ### Modelos utilizados
 
@@ -132,6 +164,11 @@ Requisitos_Inscripcion_Carnet_RETCC_2.pdf
 Canales_de_Atencion_Retcc_2.pdf
 ```
 
+Los archivos PDF que utiliza el agente se encuentran almacenados en la carpeta:
+```text
+documentos/
+```
+
 El documento de canales contiene información tabular sobre regiones, oficinas, servidores responsables, contactos, horarios, páginas oficiales y pagos por duplicado. Cada sede es convertida en un documento estructurado independiente para preservar la relación entre sus columnas.
 
 
@@ -139,26 +176,31 @@ El documento de canales contiene información tabular sobre regiones, oficinas, 
 ## 📁 Estructura del proyecto
 
 ```text
-Alura-AgenteIA-RAG-PDF/
+Alura-AgenteIA-RAG-PDF-CloudRun/
 │
-├── Agente_RETCC_Alura_Desafio_3.6.ipynb
+├── app.py
+├── requirements.txt
+├── Dockerfile
+├── .dockerignore
+├── .gitignore
+├── README.md
 │
 ├── documentos/
 │   ├── Reglamento_Incripcion_RETCC.pdf
 │   ├── Requisitos_Inscripcion_Carnet_RETCC_2.pdf
 │   └── Canales_de_Atencion_Retcc_2.pdf
 │
+├── notebooks/
+│   └── Agente_RETCC_Alura_Desafio.ipynb
+│
 ├── retcc_assets/
 │   ├── avatar_retcc.png
 │   └── casco.svg
 │
-├── docs/
-│   ├── retccbob-demo.png
-│   └── flujo-langgraph.png
-│
-├── README.md
-├── LICENSE
-└── .gitignore
+└── docs/
+    ├── retccbob-demo.png
+    ├── flujo-langgraph.png
+    └── retccbob-cloudrun-produccion.png
 ```
 
 ### Organización lógica del notebook
@@ -214,8 +256,8 @@ Alura-AgenteIA-RAG-PDF/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/arturexxx/Alura-AgenteIA-RAG-PDF.git
-cd Alura-AgenteIA-RAG-PDF
+git clone https://github.com/arturexxx/Alura-AgenteIA-RAG-PDF-CloudRun.git
+cd Alura-AgenteIA-RAG-PDF-CloudRun
 ```
 
 ### 2. Crear un entorno virtual
@@ -279,6 +321,22 @@ from google.colab import userdata
 
 GOOGLE_API_KEY = userdata.get("GOOGLE_API_KEY")
 ```
+### Variables para ejecución local o en Cloud Run
+
+La aplicación utiliza las siguientes variables de entorno:
+
+```text
+GOOGLE_API_KEY
+GEMINI_MODEL
+```
+
+`GOOGLE_API_KEY` es obligatoria. `GEMINI_MODEL` es opcional y utiliza por defecto:
+
+```text
+gemini-2.5-flash
+```
+
+La clave nunca debe guardarse en GitHub. En Cloud Run se configura desde **Variables y secretos**.
 
 ### Recursos visuales
 
@@ -328,10 +386,56 @@ interfaz_retcc.launch(
 
 ### Ejecución local
 
-Convierte el notebook en script o adapta las celdas que dependen de `google.colab`. Luego ejecuta:
+La versión ejecutable ya se encuentra en `app.py`. Configura primero `GOOGLE_API_KEY` y ejecuta:
 
 ```bash
 python app.py
+```
+
+---
+
+## ☁️ Despliegue en Google Cloud Run
+
+El repositorio incluye los archivos necesarios para publicar la aplicación:
+
+```text
+app.py
+requirements.txt
+Dockerfile
+.dockerignore
+```
+
+El contenedor inicia Gradio mediante:
+
+```python
+interfaz_retcc.launch(
+    server_name="0.0.0.0",
+    server_port=int(os.getenv("PORT", "8080")),
+    share=False,
+    debug=False
+)
+```
+
+Flujo de despliegue:
+
+```text
+GitHub
+   ↓
+Developer Connect
+   ↓
+Cloud Build
+   ↓
+Artifact Registry
+   ↓
+Cloud Run
+```
+
+Cada actualización enviada a la rama `main` genera automáticamente una nueva compilación y una nueva revisión del servicio.
+
+La revisión desplegada correctamente atiende el `100 %` del tráfico del servicio público:
+
+```text
+https://retcc-bob-671777364299.southamerica-west1.run.app
 ```
 
 ---
