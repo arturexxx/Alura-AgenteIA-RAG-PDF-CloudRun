@@ -72,6 +72,7 @@ El sistema también identifica preguntas fuera del ámbito del RETCC y evita env
 - [Configuración](#-configuración)
 - [Ejecución](#ejecucion)
 - [Uso](#-uso)
+- [Preguntas y respuestas para el Agente](#preguntasyrespuestas)
 - [Pruebas recomendadas](#-pruebas-recomendadas)
 - [Contribución](#-contribución)
 - [Licencia](#-licencia)
@@ -474,6 +475,51 @@ El triaje debe clasificarla como:
 ```text
 FUERA_DE_TEMA
 ```
+
+---
+
+<a id="preguntasyrespuestas"></a>
+## 💬 Ejemplos de preguntas y respuestas generadas por el agente
+
+### 1. Requisitos para la inscripción en el RETCC
+
+**Pregunta:**
+
+```text
+¿Cuáles son los requisitos para inscribirme en el RETCC?
+```
+
+**Respuesta generada por el agente:**
+
+Para inscribirse en el RETCC, los trabajadores interesados deben presentar una solicitud según formato aprobado, adjuntando la siguiente documentación:
+
+- Certificado o Constancia de Capacitación o Certificación de competencias laborales emitida por SENCICO u otras entidades públicas o privadas habilitadas para capacitar o certificar las competencias laborales en la actividad de construcción civil. Este documento no es exigible para la primera inscripción.
+- Certificados originales de los antecedentes policiales, judiciales y penales, vigentes.
+- Fotografía actualizada del trabajador solicitante.
+
+---
+
+### 2. Renovación del carné RETCC
+
+**Pregunta:**
+
+```text
+¿Cómo puedo renovar mi carné RETCC?
+```
+
+**Respuesta generada por el agente:**
+
+Para renovar su carné RETCC, debe presentar una solicitud según formato y adjuntar los siguientes documentos:
+
+- Solicitud según formato.
+- Certificados o constancias de haber realizado cursos de capacitación o certificados de competencias laborales. En el caso de los certificados de competencias laborales, estos deben estar vigentes a la fecha de solicitud de renovación.
+- Certificados de trabajo respecto a las obras en las que pudiera haber laborado en el período comprendido desde la obtención de la última inscripción en el Registro y la solicitud de renovación.
+- Certificados originales de los antecedentes policiales, judiciales y penales, vigentes.
+- Fotografía actualizada del trabajador solicitante.
+
+La inscripción puede ser renovada desde los cuarenta y cinco (45) días calendario anteriores a la fecha de su vencimiento, hasta el último día de su vigencia.
+
+De no renovarse oportunamente, la inscripción caducará de manera automática.
 
 ---
 
