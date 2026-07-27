@@ -1,0 +1,15 @@
+.git
+.github
+.gitignore
+__pycache__/
+*.py[cod]
+*.log
+.venv/
+venv/
+env/
+.env
+.ipynb_checkpoints/
+notebooks/
+README.md
+.vscode/
+.DS_Store

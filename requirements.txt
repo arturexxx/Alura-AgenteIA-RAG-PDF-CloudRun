@@ -1,0 +1,15 @@
+gradio==5.49.1
+langchain
+langchain-community
+langchain-core
+langchain-text-splitters
+langchain-huggingface
+langchain-google-genai
+langgraph
+sentence-transformers
+faiss-cpu
+pypdf
+pdfplumber
+python-dotenv
+pydantic>=2.11,<3
+torch
